@@ -2,26 +2,20 @@ import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getAllChores } from '../lib/chores'
-import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Typography } from '@material-ui/core/'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { AppBar, Toolbar, IconButton, Fab } from '@material-ui/core/'
-import MenuIcon from '@material-ui/icons/Menu'
-import AddIcon from '@material-ui/icons/Add';
-import { spacing } from '@material-ui/system';
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
-  },
-  appBar: {
-    top: 'auto',
-    bottom: 0,
-  },
-  card: {
-    margin: 10,
+    minWidth: 650
   }
-});
+})
 
 export async function getStaticProps () {
   const allChoresData = await getAllChores()
@@ -71,5 +65,5 @@ export default function Home ({ allChoresData }) {
       </AppBar>
       ) : null}
     </Layout>
-  );
+  )
 }
