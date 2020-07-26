@@ -3,13 +3,12 @@ import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
 import { getAllChores } from '../lib/chores'
 import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import Paper from '@material-ui/core/Paper'
+import { Card, CardContent, Typography } from '@material-ui/core/'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { AppBar, Toolbar, IconButton, Fab } from '@material-ui/core/'
+import MenuIcon from '@material-ui/icons/Menu'
+import AddIcon from '@material-ui/icons/Add';
+import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles({
   table: {
