@@ -11,8 +11,12 @@ import AddIcon from '@material-ui/icons/Add';
 import { spacing } from '@material-ui/system';
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: 650
+  appBar: {
+    top: 'auto',
+    bottom: 0,
+  },
+  card: {
+    margin: 10,
   }
 })
 
