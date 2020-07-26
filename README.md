@@ -1,1 +1,1 @@
-This is a starter template for [Learn Next.js](https://nextjs.org/learn).
+Frontend for https://github.com/tech-boyz/Chore_App built using NEXT.js
