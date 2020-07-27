@@ -27,6 +27,7 @@ jobs:
         service_account_email: ${{ secrets.GCP_SA_EMAIL  }}
         # The service account key which will be used for authentication.
         service_account_key: ${{ secrets.GCP_SA_ACCOUNT }}
+        export_default_credentials: true
 
     - name: gcloud app deploy
       uses: actions-hub/gcloud@300.0.0
