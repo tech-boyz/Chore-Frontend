@@ -1,45 +1,33 @@
-# This workflow will build a docker container, publish it to Google Container Registry, and deploy it to GKE when a release is created
-#
-# To configure this workflow:
-#
-# 1. Ensure that your repository contains the necessary configuration for your Google Kubernetes Engine cluster, including deployment.yml, kustomization.yml, service.yml, etc.
-#
-# 2. Set up secrets in your workspace: GKE_PROJECT with the name of the project, GKE_EMAIL with the service account email, GKE_KEY with the Base64 encoded JSON service account key (https://github.com/GoogleCloudPlatform/github-actions/tree/docs/service-account-key/setup-gcloud#inputs).
-#
-# 3. Change the values for the GKE_ZONE, GKE_CLUSTER, IMAGE, REGISTRY_HOSTNAME and DEPLOYMENT_NAME environment variables (below).
-
 name: Build and Deploy to GKE
 
 on:
   push:
     branches: [ release-* ]
 
-# Environment variables available to all jobs and steps in this workflow
-env:
-  GKE_PROJECT: ${{ secrets.PROJECT_ID }}
-  GKE_EMAIL: ${{ secrets.GCP_SA_EMAIL  }}
-  GITHUB_SHA: ${{ github.sha }}
-  GKE_ZONE: us-west1-a
-  GKE_CLUSTER: example-gke-cluster
-  IMAGE: gke-test
-  REGISTRY_HOSTNAME: gcr.io
-  DEPLOYMENT_NAME: gke-test
+    # Environment variables available to all jobs and steps in this workflow
+    jobs:
+      setup-build-publish-deploy:
+        name: Setup, Build, Publish, and Deploy
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
 
-jobs:
-  setup-build-publish-deploy:
-    name: Setup, Build, Publish, and Deploy
-    runs-on: ubuntu-latest
-    steps:
+        - name: Build
+          run: npm run build
 
-    - name: Checkout
-      uses: actions/checkout@v2
-    
-    - name: Build
-      run: npm run build
-    
-    - uses: actions/gcloud/auth@master
-      env:
-        GCLOUD_AUTH: ${{ secrets.GCP_SA_ACCOUNT }}
-    - uses: actions/gcloud/cli@master
-      with:
-        args: 'app deploy --quiet --project=${{ secrets.PROJECT_ID }}'
+        - name: Setup gcloud environment
+          uses: GoogleCloudPlatform/github-actions@0.1.2
+          with:
+            # The version of the gcloud SDK to be installed.  Example: 275.0.0
+            version: # optional, default is 275.0.0
+            # The service account email which will be used for authentication.
+            service_account_email: ${{ secrets.GCP_SA_EMAIL  }}
+            # The service account key which will be used for authentication.
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+
+        - name: Google Cloud Platform (GCP) CLI - gcloud
+          uses: actions-hub/gcloud@300.0.0
+          with:
+            args: 'app deploy --quiet --project=${{ secrets.PROJECT_ID }}'
+            cli: # optional, default is gcloud
