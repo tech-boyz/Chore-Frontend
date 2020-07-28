@@ -4,7 +4,7 @@ This the frontend for https://github.com/tech-boyz/Chore_App built using NEXT.js
 
 ## Project Status
 
-![build](https://github.com/tech-boyz/Chore-Frontend/workflows/build/badge.svg)
+![build](https://github.com/tech-boyz/Chore-Frontend/workflows/build/badge.svg) ![Deployment to GKE](https://github.com/tech-boyz/Chore-Frontend/workflows/Deployment%20to%20GKE/badge.svg)
 
 ## Development Workflow
 
