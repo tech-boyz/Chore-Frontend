@@ -1,0 +1,30 @@
+name: Deployment to GKE
+
+on:
+  push:
+    branches: [ release-* ]
+
+    # Environment variables available to all jobs and steps in this workflow
+jobs:
+  setup-build-publish-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: npm install
+      run: npm install
+
+    - name: next build
+      run: npm run build
+
+    - name: Setup gcloud environment
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: # optional, default is 275.0.0
+        project_id: ${{ secrets.PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_ACCOUNT }}
+        export_default_credentials: true
+
+    - name: gcloud app deploy
+      run: 'gcloud app deploy --quiet --project=${{ secrets.PROJECT_ID }}'
